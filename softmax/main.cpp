@@ -60,6 +60,27 @@ void print_vector(const std::vector<double>& input)
     std::cout << std::endl;
 }
 
+bool check_x0_more_x1_then_sm0_more_sm1(const std::vector<double>& x_vector, const std::vector<double>& sm_vector)
+{
+    for(size_t i = 1; i < x_vector.size(); i++) {
+
+        const auto x1 = x_vector[i];
+        const auto x0 = x_vector[i - 1];
+        const bool x0_greater_x1 = x0 > x1;
+
+        const auto sm1 = sm_vector[i];
+        const auto sm0 = sm_vector[i - 1];
+        const bool sm0_greater_sm1 = sm0 > sm1;
+
+        if (x0_greater_x1 != sm0_greater_sm1) {
+
+            return false;
+        }
+    }
+
+    return true;
+}
+
 int main()
 {
     std::cout << "Hello, World!\n";
@@ -82,6 +103,10 @@ int main()
 
         const auto res_b = softmax2(input);
         print_vector(res_b);
+
+        const bool x0sm0equation = check_x0_more_x1_then_sm0_more_sm1(input, res_b);
+        std::cout << "x0sm0equation: " << (x0sm0equation ? "true" : "false") << std::endl;
+
     }
 
     return 0;
