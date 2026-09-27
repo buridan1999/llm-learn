@@ -64,17 +64,25 @@ int main()
 {
     std::cout << "Hello, World!\n";
 
-    const auto res_a = softmax({3.0, 2.0, 1.0, 0.0});
-    print_vector(res_a);
+    const std::vector<double> inputs[] = {
+        {3.0, 2.0, 1.0, 0.0},
+        {1000.0, 1001.0, 1002.0, 1003.0},
+        {0.0, 0.0, 0.0, 0.0},
+        {10.0, 1.0, 0.0},
+        {-5.0, -4.0, -3.0},
+    };
 
-    const auto res_b = softmax({1000.0, 1001.0, 1002.0, 1003.0});
-    print_vector(res_b);
+    for(const auto& input : inputs) {
 
-    const auto res_c = softmax2({3.0, 2.0, 1.0, 0.0});
-    print_vector(res_c);
+        std::cout << "input: ";
+        print_vector(input);
 
-    const auto res_d = softmax2({1000.0, 1001.0, 1002.0, 1003.0});
-    print_vector(res_d);
+        const auto res_a = softmax(input);
+        print_vector(res_a);
+
+        const auto res_b = softmax2(input);
+        print_vector(res_b);
+    }
 
     return 0;
 }
