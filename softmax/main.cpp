@@ -81,6 +81,24 @@ bool check_x0_more_x1_then_sm0_more_sm1(const std::vector<double>& x_vector, con
     return true;
 }
 
+bool nearly_equal(double a, double b, double epsilon = 1e-5)
+{
+    return std::abs(a - b) < epsilon;
+}
+
+bool check_vector_equals(const std::vector<double>& a, const std::vector<double>& b)
+{
+    for(size_t i = 0; i < a.size(); i++) {
+
+        if (!nearly_equal(a[i], b[i])) {
+
+            return false;
+        }
+    }
+
+    return true;
+}
+
 int main()
 {
     std::cout << "Hello, World!\n";
@@ -93,7 +111,19 @@ int main()
         {-5.0, -4.0, -3.0},
     };
 
-    for(const auto& input : inputs) {
+    const std::vector<double> outputs[] = {
+        {0.643914, 0.236883, 0.0871443, 0.0320586},
+        {0.0320586, 0.0871443, 0.236883, 0.643914},
+        {0.25, 0.25, 0.25, 0.25},
+        {0.999831, 0.000123389, 4.53923e-05},
+        {0.0900306, 0.244728, 0.665241},
+    };
+
+    //for(const auto& input : inputs) {
+    for(size_t j = 0; j < std::size(inputs); j++) {
+
+        const auto& input = inputs[j];
+        const auto& output = outputs[j];
 
         std::cout << "input: ";
         print_vector(input);
@@ -106,6 +136,8 @@ int main()
 
         const bool x0sm0equation = check_x0_more_x1_then_sm0_more_sm1(input, res_b);
         std::cout << "x0sm0equation: " << (x0sm0equation ? "true" : "false") << std::endl;
+
+        std::cout << "check_vector_equals: "<< ( check_vector_equals(res_b, output) ? "true" : "false" ) << std::endl;
 
     }
 
